@@ -16,7 +16,7 @@ export default function Hero() {
     >
       {/* Background photo */}
       <Image
-        src="/Still 2025-09-30 100704_1.47.1.jpg"
+        src="/hero-bg.jpg"
         alt="Serdar Bolukbaşi studio"
         fill
         priority

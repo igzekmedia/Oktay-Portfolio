@@ -111,7 +111,7 @@ export default function About() {
               style={{ aspectRatio: "4 / 3" }}
             >
               <Image
-                src="/Still 2025-09-30 100704_1.47.1.jpg"
+                src="/hero-bg.jpg"
                 alt="Serdar Bolukbaşi at work"
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
