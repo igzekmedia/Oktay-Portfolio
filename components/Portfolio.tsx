@@ -15,6 +15,8 @@ const works = [
   { id: 7,  src: "/color/8.png",           alt: "Tattoo by Serdar Bolukbaşi", category: "color",        w: 1080, h: 1350 },
   { id: 8,  src: "/color/13.png",          alt: "Tattoo by Serdar Bolukbaşi", category: "color",        w: 1080, h: 1350 },
   { id: 9,  src: "/color/22.png",          alt: "Tattoo by Serdar Bolukbaşi", category: "color",        w: 1080, h: 1350 },
+  // surrealism
+  { id: 27, src: "/surrealism/1.JPG",      alt: "Tattoo by Serdar Bolukbaşi", category: "surrealism",    w: 1080, h: 1350 },
   // realism
   { id: 10, src: "/realism/IMG_3276.jpg",  alt: "Tattoo by Serdar Bolukbaşi", category: "realism",      w: 5712, h: 4284 },
   { id: 11, src: "/realism/10.png",        alt: "Tattoo by Serdar Bolukbaşi", category: "realism",      w: 1080, h: 1350 },
