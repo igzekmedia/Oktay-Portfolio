@@ -40,7 +40,7 @@ const works = [
   { id: 25, src: "/anime/17.png",          alt: "Tattoo by Serdar Bolukbaşi", category: "anime",        w: 1080, h: 1350 },
 ];
 
-const categories = ["all", "color", "realism", "micro-realism", "surrealism", "blackwork", "geometric", "fine-line", "botanical", "anime"];
+const categories = ["all", "color", "realism", "micro-realism", "surrealism", "blackwork", "geometric", "botanical", "anime"];
 
 export default function Portfolio() {
   const [active, setActive] = useState("all");
