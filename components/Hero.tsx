@@ -12,7 +12,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center justify-end pb-40 md:justify-center md:pb-0 overflow-hidden"
     >
       {/* Background photo */}
       <Image
@@ -38,7 +38,7 @@ export default function Hero() {
       <div className="absolute right-8 top-0 bottom-0 w-px bg-white/10 hidden lg:block" />
 
       {/* Content */}
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto flex flex-col items-center md:mt-64">
+      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto flex flex-col items-center md:mt-64 w-full">
 
         {/* Name */}
         <motion.h1

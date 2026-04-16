@@ -1,36 +1,40 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
 const works = [
+  // ── TOP 6 — array order controls visual layout in 3-col masonry:
+  //    arr[1]=col1-top  arr[2]=col1-bot  arr[3]=col2-top
+  //    arr[4]=col2-bot  arr[5]=col3-top  arr[6]=col3-bot
+  { id: 18, src: "/blackwork/IMG_5103.JPG",  alt: "Tattoo by Serdar Bolukbaşi", category: "blackwork", w: 3024, h: 4032 }, // col1-top: bike
+  { id: 14, src: "/realism/21.png",          alt: "Tattoo by Serdar Bolukbaşi", category: "realism",   w: 1080, h: 1350 }, // col1-bot: horse
+  { id: 4,  src: "/color/SnapInsta.to_375145342_835218171650416_6824207980199041988_n.jpg", alt: "Tattoo by Serdar Bolukbaşi", category: "color", w: 1440, h: 1800 }, // col2-top: joker
+  { id: 19, src: "/blackwork/IMG_5109.jpg",  alt: "Tattoo by Serdar Bolukbaşi", category: "blackwork", w: 4284, h: 5712 }, // col2-bot: sword
+  { id: 26, src: "/realism/23.png",          alt: "Tattoo by Serdar Bolukbaşi", category: "realism",   w: 1080, h: 1350 }, // col3-top: peaky blinders
+  { id: 21, src: "/blackwork/20.png",         alt: "Tattoo by Serdar Bolukbaşi", category: "blackwork", w: 1080, h: 1350 }, // col3-bot: face
+  // ── rest of portfolio ────────────────────────────────────────────────────
   // color
-  { id: 1,  src: "/color/IMG_2213.JPG",    alt: "Tattoo by Serdar Bolukbaşi", category: "color",        w: 1080, h: 1350 },
-  { id: 2,  src: "/color/IMG_3203.jpg",    alt: "Tattoo by Serdar Bolukbaşi", category: "color",        w: 5712, h: 4284 },
-  { id: 3,  src: "/color/IMG_5322.JPG",    alt: "Tattoo by Serdar Bolukbaşi", category: "color",        w: 4284, h: 5712 },
-  { id: 4,  src: "/color/SnapInsta.to_375145342_835218171650416_6824207980199041988_n.jpg", alt: "Tattoo by Serdar Bolukbaşi", category: "color", w: 1440, h: 1800 },
+  { id: 1,  src: "/color/IMG_2213.JPG",    alt: "Tattoo by Serdar Bolukbaşi", category: "color",        w: 1080, h: 1350, excludeFromAll: true },
+  { id: 2,  src: "/color/IMG_3203.jpg",    alt: "Tattoo by Serdar Bolukbaşi", category: "color",        w: 5712, h: 4284, excludeFromAll: true },
+  { id: 3,  src: "/color/IMG_5322.JPG",    alt: "Tattoo by Serdar Bolukbaşi", category: "color",        w: 4284, h: 5712, excludeFromAll: true },
   { id: 5,  src: "/color/SnapInsta.to_520569583_18514216570028898_4657283457264374493_n.jpg", alt: "Tattoo by Serdar Bolukbaşi", category: "color", w: 1080, h: 1440 },
   { id: 6,  src: "/color/7.png",           alt: "Tattoo by Serdar Bolukbaşi", category: "color",        w: 1080, h: 1350 },
   { id: 7,  src: "/color/8.png",           alt: "Tattoo by Serdar Bolukbaşi", category: "color",        w: 1080, h: 1350 },
   { id: 8,  src: "/color/13.png",          alt: "Tattoo by Serdar Bolukbaşi", category: "color",        w: 1080, h: 1350 },
   { id: 9,  src: "/color/22.png",          alt: "Tattoo by Serdar Bolukbaşi", category: "color",        w: 1080, h: 1350 },
   // surrealism
-  { id: 27, src: "/surrealism/1.JPG",      alt: "Tattoo by Serdar Bolukbaşi", category: "surrealism",    w: 1080, h: 1350 },
+  { id: 27, src: "/surrealism/1.JPG",      alt: "Tattoo by Serdar Bolukbaşi", category: "surrealism",   w: 1080, h: 1350 },
   // realism
   { id: 10, src: "/realism/IMG_3276.jpg",  alt: "Tattoo by Serdar Bolukbaşi", category: "realism",      w: 5712, h: 4284 },
-  { id: 11, src: "/realism/10.png",        alt: "Tattoo by Serdar Bolukbaşi", category: "realism",      w: 1080, h: 1350 },
   { id: 12, src: "/realism/11.png",        alt: "Tattoo by Serdar Bolukbaşi", category: "realism",      w: 1080, h: 1350 },
   { id: 13, src: "/realism/16.png",        alt: "Tattoo by Serdar Bolukbaşi", category: "realism",      w: 1080, h: 1350 },
-  { id: 14, src: "/realism/21.png",        alt: "Tattoo by Serdar Bolukbaşi", category: "realism",      w: 1080, h: 1350 },
-  { id: 26, src: "/realism/23.png",        alt: "Tattoo by Serdar Bolukbaşi", category: "realism",      w: 1080, h: 1350 },
   // micro-realism
   { id: 15, src: "/micro-realism/IMG_2467.JPG", alt: "Tattoo by Serdar Bolukbaşi", category: "micro-realism", w: 4284, h: 5712 },
   { id: 16, src: "/micro-realism/14.png",  alt: "Tattoo by Serdar Bolukbaşi", category: "micro-realism", w: 1080, h: 1350 },
   { id: 17, src: "/micro-realism/15.png",  alt: "Tattoo by Serdar Bolukbaşi", category: "micro-realism", w: 1080, h: 1350 },
   // blackwork
-  { id: 18, src: "/blackwork/IMG_5103.JPG", alt: "Tattoo by Serdar Bolukbaşi", category: "blackwork",   w: 3024, h: 4032 },
-  { id: 19, src: "/blackwork/IMG_5109.jpg", alt: "Tattoo by Serdar Bolukbaşi", category: "blackwork",   w: 4284, h: 5712 },
   { id: 20, src: "/blackwork/19.png",      alt: "Tattoo by Serdar Bolukbaşi", category: "blackwork",    w: 1080, h: 1350 },
   { id: 21, src: "/blackwork/20.png",      alt: "Tattoo by Serdar Bolukbaşi", category: "blackwork",    w: 1080, h: 1350 },
   // geometric
@@ -46,8 +50,28 @@ const categories = ["all", "color", "realism", "micro-realism", "surrealism", "b
 
 export default function Portfolio() {
   const [active, setActive] = useState("all");
+  const [showAll, setShowAll] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-  const filtered = active === "all" ? works : works.filter((w) => w.category === active);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  const filtered = active === "all"
+    ? works.filter((w) => !w.excludeFromAll)
+    : works.filter((w) => w.category === active);
+
+  const limit = isMobile ? 4 : 6;
+  const isTruncated = active === "all" && !showAll && filtered.length > limit;
+  const displayed = isTruncated ? filtered.slice(0, limit) : filtered;
+
+  const handleCategoryChange = (cat: string) => {
+    setActive(cat);
+    setShowAll(false);
+  };
 
   return (
     <section id="portfolio" className="py-16 md:py-32 px-6 md:px-12">
@@ -77,7 +101,7 @@ export default function Portfolio() {
             {categories.map((cat) => (
               <button
                 key={cat}
-                onClick={() => setActive(cat)}
+                onClick={() => handleCategoryChange(cat)}
                 className="text-[10px] tracking-[0.2em] uppercase transition-colors duration-200 cursor-pointer pb-0.5"
                 style={{
                   color: active === cat ? "var(--gold)" : "var(--muted)",
@@ -93,7 +117,7 @@ export default function Portfolio() {
         {/* Masonry grid */}
         <div className="columns-1 sm:columns-2 lg:columns-3 gap-3 space-y-3">
           <AnimatePresence mode="popLayout">
-            {filtered.map((work, i) => (
+            {displayed.map((work, i) => (
               <motion.div
                 key={work.id}
                 layout
@@ -122,6 +146,22 @@ export default function Portfolio() {
             ))}
           </AnimatePresence>
         </div>
+
+        {/* Show More — All tab only */}
+        {isTruncated && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="mt-10 text-center"
+          >
+            <button
+              onClick={() => setShowAll(true)}
+              className="inline-flex items-center gap-3 text-[11px] tracking-[0.25em] uppercase text-[var(--muted)] hover:text-[var(--gold)] transition-colors duration-300 cursor-pointer border border-current px-6 py-3"
+            >
+              Show More
+            </button>
+          </motion.div>
+        )}
 
         {/* Instagram CTA */}
         <motion.div
