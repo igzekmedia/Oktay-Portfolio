@@ -17,7 +17,7 @@ export default function Hero() {
       {/* Mobile background — photo */}
       <div className="absolute inset-0 block md:hidden">
         <Image
-          src="/6F8A7420.jpg"
+          src="/Oktay-Mobile-Hero.jpg"
           alt="Oktay Yıldırım tattooing"
           fill
           priority
