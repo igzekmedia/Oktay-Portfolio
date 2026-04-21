@@ -14,27 +14,37 @@ const links = [
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  // mobile hide-on-scroll-down
-  const [mobileVisible, setMobileVisible] = useState(true);
+  const [mobileHidden, setMobileHidden] = useState(false);
   const lastScrollY = useRef(0);
+  const isMobile = useRef(false);
 
   useEffect(() => {
+    isMobile.current = window.innerWidth < 768;
+
+    const onResize = () => {
+      isMobile.current = window.innerWidth < 768;
+    };
+
     const onScroll = () => {
       const y = window.scrollY;
       setScrolled(y > 60);
 
-      // On mobile: hide when scrolling down past 80px, show on scroll up
-      if (typeof window !== "undefined" && window.innerWidth < 768) {
+      if (isMobile.current) {
         if (y > 80) {
-          setMobileVisible(y < lastScrollY.current);
+          setMobileHidden(y > lastScrollY.current);
         } else {
-          setMobileVisible(true);
+          setMobileHidden(false);
         }
       }
       lastScrollY.current = y;
     };
+
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onResize, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
+    };
   }, []);
 
   const handleLink = (href: string) => {
@@ -46,22 +56,17 @@ export default function Nav() {
   return (
     <>
       <motion.header
-        initial={{ opacity: 0, y: -16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: mobileHidden ? "-110%" : 0, opacity: 1 }}
+        transition={{ duration: 0.35, ease: "easeInOut" }}
         className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-6 md:px-12"
         style={{
-          background: scrolled
-            ? "rgba(9,9,9,0.92)"
-            : "transparent",
+          background: scrolled ? "rgba(9,9,9,0.92)" : "transparent",
           backdropFilter: scrolled ? "blur(12px)" : "none",
           borderBottom: scrolled ? "1px solid #1a1a1a" : "none",
-          transition: "background 0.4s, backdrop-filter 0.4s, border-color 0.4s, transform 0.35s ease",
-          // hide/show on mobile via transform; desktop always visible
-          transform: mobileVisible ? "translateY(0)" : "translateY(-110%)",
+          transition: "background 0.4s, backdrop-filter 0.4s, border-color 0.4s",
         }}
       >
-
         <a
           href="#hero"
           onClick={(e) => { e.preventDefault(); handleLink("#hero"); }}
