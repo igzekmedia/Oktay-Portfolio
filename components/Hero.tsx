@@ -26,6 +26,9 @@ export default function Hero() {
         />
       </div>
 
+      {/* Mobile dark overlay — improves text readability */}
+      <div className="absolute inset-0 block md:hidden bg-black/45 z-[1]" />
+
       {/* Desktop background — video */}
       <video
         autoPlay
