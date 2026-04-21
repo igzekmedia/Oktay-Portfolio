@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Serdar Bolukbaşi — International Award Winning Tattoo Artist",
+  title: "Oktay | Tattoo Artist",
   description:
-    "Fine line and blackwork tattoo art by Serdar Bolukbaşi. Book your appointment with one of the world's most recognized tattoo artists.",
+    "Oktay — Blackwork tattoo artist at Cleopatra Ink Denver.",
   openGraph: {
-    title: "Serdar Bolukbaşi — Tattoo Artist",
-    description: "International Award Winning Tattoo Artist",
+    title: "Oktay | Tattoo Artist",
+    description: "Blackwork Tattoo Artist at Cleopatra Ink Denver",
     type: "website",
   },
 };

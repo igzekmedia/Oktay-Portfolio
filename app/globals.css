@@ -8,8 +8,11 @@
   --border: #222222;
   --text: #EDE8E3;
   --muted: #7A7470;
-  --gold: #C8A46E;
-  --gold-dim: #8a6f48;
+  --gold: #d1b468;
+  --gold-mid: #ad8c59;
+  --gold-dark: #8f7041;
+  --gold-gradient: linear-gradient(135deg, #d1b468 0%, #ad8c59 45%, #8f7041 100%);
+  --gold-dim: #8f7041;
   --font-display: 'Syne', system-ui, sans-serif;
   --font-body: 'DM Sans', system-ui, sans-serif;
 }
@@ -59,3 +62,31 @@ body {
   background: var(--border);
 }
 
+
+/* ── Gold gradient — matches Oktay logo ─────────────────────────────────── */
+.gold-text {
+  background: linear-gradient(135deg, #d1b468 0%, #ad8c59 45%, #8f7041 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gold-border {
+  border-image: linear-gradient(135deg, #d1b468, #ad8c59, #8f7041) 1;
+}
+
+/* Apply gold gradient to all gold-colored text elements */
+.text-\[var\(--gold\)\] {
+  background: linear-gradient(135deg, #d1b468 0%, #ad8c59 50%, #8f7041 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Gold gradient for inline-styled spans */
+.gold-gradient-text {
+  background: linear-gradient(135deg, #d1b468 0%, #ad8c59 50%, #8f7041 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

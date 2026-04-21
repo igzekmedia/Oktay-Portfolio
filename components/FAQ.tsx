@@ -5,24 +5,24 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const faqs = [
   {
-    q: "How do I book a tattoo appointment with Serdar?",
-    a: "You can book an appointment by contacting Serdar directly through Instagram, email, or the booking form on this website. We recommend booking in advance, as his schedule in Denver and during guest spots fills up quickly.",
+    q: "How do I book a tattoo appointment with Oktay?",
+    a: "You can book an appointment by contacting Oktay directly through Instagram, email, or the booking form on this website. We recommend booking in advance, as his schedule in Denver and during guest spots fills up quickly.",
   },
   {
     q: "Do I need to pay a deposit?",
-    a: "Yes, a deposit is required to secure your appointment. The deposit goes toward the final cost of your tattoo and ensures your spot in Serdar's schedule. Deposits are non-refundable but transferable if you reschedule in advance.",
+    a: "Yes, a deposit is required to secure your appointment. The deposit goes toward the final cost of your tattoo and ensures your spot in Oktay's schedule. Deposits are non-refundable but transferable if you reschedule in advance.",
   },
   {
     q: "How much does a tattoo cost?",
-    a: "Tattoo pricing depends on size, placement, and detail. Black & grey realism and micro-realism tattoos are highly detailed and may require multiple sessions. Serdar will provide a price estimate during your consultation.",
+    a: "Tattoo pricing depends on size, placement, and detail. Black & grey realism and micro-realism tattoos are highly detailed and may require multiple sessions. Oktay will provide a price estimate during your consultation.",
   },
   {
     q: "Can I bring my own design idea?",
-    a: "Absolutely. You can bring reference photos, sketches, or any inspiration you have. Serdar specializes in custom designs and will adapt your idea into a unique piece of art that fits your vision and body placement.",
+    a: "Absolutely. You can bring reference photos, sketches, or any inspiration you have. Oktay specializes in custom designs and will adapt your idea into a unique piece of art that fits your vision and body placement.",
   },
   {
     q: "Does getting a tattoo hurt?",
-    a: "Pain levels vary depending on the location and size of the tattoo. Most clients describe the feeling as uncomfortable but manageable. Serdar works with care and patience to make the process as comfortable as possible.",
+    a: "Pain levels vary depending on the location and size of the tattoo. Most clients describe the feeling as uncomfortable but manageable. Oktay works with care and patience to make the process as comfortable as possible.",
   },
   {
     q: "How should I prepare for my tattoo session?",
@@ -30,19 +30,19 @@ const faqs = [
   },
   {
     q: "How long does a tattoo session take?",
-    a: "Session length depends on the size and complexity of the tattoo. Small tattoos may take 1–2 hours, while large black & grey realism pieces can require several sessions. Serdar will provide an estimated timeline during your consultation.",
+    a: "Session length depends on the size and complexity of the tattoo. Small tattoos may take 1–2 hours, while large black & grey realism pieces can require several sessions. Oktay will provide an estimated timeline during your consultation.",
   },
   {
     q: "How do I take care of my tattoo afterward?",
-    a: "Serdar provides detailed aftercare instructions to ensure proper healing. Generally, you'll need to keep the area clean, moisturized, and protected from direct sunlight. Avoid swimming, tanning, and intense physical activity until the tattoo heals.",
+    a: "Oktay provides detailed aftercare instructions to ensure proper healing. Generally, you'll need to keep the area clean, moisturized, and protected from direct sunlight. Avoid swimming, tanning, and intense physical activity until the tattoo heals.",
   },
   {
     q: "Can I get tattooed if it's my first time?",
-    a: "Yes! Many of Serdar's clients are first-timers. He will guide you through the process step by step, answer all your questions, and make sure you feel comfortable throughout your tattoo journey.",
+    a: "Yes! Many of Oktay's clients are first-timers. He will guide you through the process step by step, answer all your questions, and make sure you feel comfortable throughout your tattoo journey.",
   },
   {
-    q: "Does Serdar do cover-ups or touch-ups?",
-    a: "Yes, Serdar offers both cover-ups and touch-ups, depending on the condition of the old tattoo and the design you want. During the consultation, he will evaluate the possibilities and create a custom plan for your new piece.",
+    q: "Does Oktay do cover-ups or touch-ups?",
+    a: "Yes, Oktay offers both cover-ups and touch-ups, depending on the condition of the old tattoo and the design you want. During the consultation, he will evaluate the possibilities and create a custom plan for your new piece.",
   },
 ];
 
@@ -71,7 +71,7 @@ export default function FAQ() {
             >
               FREQUENTLY
               <br />
-              <span style={{ color: "var(--gold)", fontWeight: 400 }}>ASKED</span>
+              <span className="gold-gradient-text" style={{ fontWeight: 400 }}>ASKED</span>
             </h2>
           </div>
           <p className="text-sm text-[var(--muted)] max-w-xs leading-relaxed">

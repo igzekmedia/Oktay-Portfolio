@@ -9,7 +9,6 @@ const links = [
   { label: "Awards", href: "#awards" },
   { label: "About", href: "#about" },
   { label: "FAQ", href: "#faq" },
-  { label: "Book", href: "#booking" },
 ];
 
 export default function Nav() {
@@ -44,20 +43,19 @@ export default function Nav() {
           transition: "background 0.4s, backdrop-filter 0.4s, border-color 0.4s",
         }}
       >
-        {/* Logo */}
+
         <a
           href="#hero"
           onClick={(e) => { e.preventDefault(); handleLink("#hero"); }}
-          className="relative block w-[110px] cursor-pointer opacity-90 hover:opacity-100 transition-opacity duration-300"
-          style={{ aspectRatio: "1284 / 947" }}
-          aria-label="Serdar Bolukbaşi — home"
+          className="relative block w-[110px] h-[110px] cursor-pointer opacity-90 hover:opacity-100 transition-opacity duration-300"
+          aria-label="Oktay Yıldırım — home"
         >
           <Image
-            src="/Serdar-Bolukbasi-Logo.png"
-            alt="Serdar Bolukbaşi"
+            src="/Oktay_Logo.png"
+            alt="Oktay Yıldırım"
             fill
             className="object-contain"
-            style={{ filter: "brightness(0) invert(1)" }}
+
           />
         </a>
 

@@ -5,48 +5,33 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
 const works = [
-  // ── TOP 6 — array order controls visual layout in 3-col masonry:
-  //    arr[1]=col1-top  arr[2]=col1-bot  arr[3]=col2-top
-  //    arr[4]=col2-bot  arr[5]=col3-top  arr[6]=col3-bot
-  { id: 18, src: "/blackwork/IMG_5103.JPG",  alt: "Tattoo by Serdar Bolukbaşi", category: "blackwork", w: 3024, h: 4032 }, // col1-top: bike
-  { id: 14, src: "/realism/21.png",          alt: "Tattoo by Serdar Bolukbaşi", category: "realism",   w: 1080, h: 1350 }, // col1-bot: horse
-  { id: 4,  src: "/color/SnapInsta.to_375145342_835218171650416_6824207980199041988_n.jpg", alt: "Tattoo by Serdar Bolukbaşi", category: "color", w: 1440, h: 1800 }, // col2-top: joker
-  { id: 19, src: "/blackwork/IMG_5109.jpg",  alt: "Tattoo by Serdar Bolukbaşi", category: "blackwork", w: 4284, h: 5712 }, // col2-bot: sword
-  { id: 26, src: "/realism/23.png",          alt: "Tattoo by Serdar Bolukbaşi", category: "realism",   w: 1080, h: 1350 }, // col3-top: peaky blinders
-  { id: 21, src: "/blackwork/20.png",         alt: "Tattoo by Serdar Bolukbaşi", category: "blackwork", w: 1080, h: 1350 }, // col3-bot: face
-  // ── rest of portfolio ────────────────────────────────────────────────────
-  // color
-  { id: 1,  src: "/color/IMG_2213.JPG",    alt: "Tattoo by Serdar Bolukbaşi", category: "color",        w: 1080, h: 1350, excludeFromAll: true },
-  { id: 2,  src: "/color/IMG_3203.jpg",    alt: "Tattoo by Serdar Bolukbaşi", category: "color",        w: 5712, h: 4284, excludeFromAll: true },
-  { id: 3,  src: "/color/IMG_5322.JPG",    alt: "Tattoo by Serdar Bolukbaşi", category: "color",        w: 4284, h: 5712, excludeFromAll: true },
-  { id: 5,  src: "/color/SnapInsta.to_520569583_18514216570028898_4657283457264374493_n.jpg", alt: "Tattoo by Serdar Bolukbaşi", category: "color", w: 1080, h: 1440 },
-  { id: 6,  src: "/color/7.png",           alt: "Tattoo by Serdar Bolukbaşi", category: "color",        w: 1080, h: 1350 },
-  { id: 7,  src: "/color/8.png",           alt: "Tattoo by Serdar Bolukbaşi", category: "color",        w: 1080, h: 1350 },
-  { id: 8,  src: "/color/13.png",          alt: "Tattoo by Serdar Bolukbaşi", category: "color",        w: 1080, h: 1350 },
-  { id: 9,  src: "/color/22.png",          alt: "Tattoo by Serdar Bolukbaşi", category: "color",        w: 1080, h: 1350 },
-  // surrealism
-  { id: 27, src: "/surrealism/1.JPG",      alt: "Tattoo by Serdar Bolukbaşi", category: "surrealism",   w: 1080, h: 1350 },
-  // realism
-  { id: 10, src: "/realism/IMG_3276.jpg",  alt: "Tattoo by Serdar Bolukbaşi", category: "realism",      w: 5712, h: 4284 },
-  { id: 12, src: "/realism/11.png",        alt: "Tattoo by Serdar Bolukbaşi", category: "realism",      w: 1080, h: 1350 },
-  { id: 13, src: "/realism/16.png",        alt: "Tattoo by Serdar Bolukbaşi", category: "realism",      w: 1080, h: 1350 },
-  // micro-realism
-  { id: 15, src: "/micro-realism/IMG_2467.JPG", alt: "Tattoo by Serdar Bolukbaşi", category: "micro-realism", w: 4284, h: 5712 },
-  { id: 16, src: "/micro-realism/14.png",  alt: "Tattoo by Serdar Bolukbaşi", category: "micro-realism", w: 1080, h: 1350 },
-  { id: 17, src: "/micro-realism/15.png",  alt: "Tattoo by Serdar Bolukbaşi", category: "micro-realism", w: 1080, h: 1350 },
-  // blackwork
-  { id: 20, src: "/blackwork/19.png",      alt: "Tattoo by Serdar Bolukbaşi", category: "blackwork",    w: 1080, h: 1350 },
-  { id: 21, src: "/blackwork/20.png",      alt: "Tattoo by Serdar Bolukbaşi", category: "blackwork",    w: 1080, h: 1350 },
-  // geometric
-  { id: 22, src: "/geometric/12.png",      alt: "Tattoo by Serdar Bolukbaşi", category: "geometric",    w: 1080, h: 1350 },
-  // botanical
-  { id: 23, src: "/botanical/18.png",      alt: "Tattoo by Serdar Bolukbaşi", category: "botanical",    w: 1080, h: 1350 },
-  // anime
-  { id: 24, src: "/anime/9.png",           alt: "Tattoo by Serdar Bolukbaşi", category: "anime",        w: 1080, h: 1350 },
-  { id: 25, src: "/anime/17.png",          alt: "Tattoo by Serdar Bolukbaşi", category: "anime",        w: 1080, h: 1350 },
+  // ── Featured order (All tab preview) ────────────────────────────────────
+  { id: 1,  src: "/portfolio/black-and-grey/2.png",  alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 }, // Featured 1
+  { id: 2,  src: "/portfolio/color/14.png",           alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 }, // Featured 2
+  { id: 3,  src: "/portfolio/black-and-grey/21.png", alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 }, // Featured 3 — Portrait
+  { id: 4,  src: "/portfolio/color/6.png",            alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 }, // Featured 4 — Award-Winning
+  { id: 5,  src: "/portfolio/black-and-grey/5.png",  alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 }, // Featured 5
+  { id: 6,  src: "/portfolio/color/7.png",            alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 }, // Featured 6
+  // ── Award-Winning — excluded from All, visible in category tabs ──────────
+  { id: 7,  src: "/portfolio/black-and-grey/1.png",  alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350, excludeFromAll: true },
+  // ── Rest of portfolio ────────────────────────────────────────────────────
+  { id: 8,  src: "/portfolio/black-and-grey/4.png",  alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
+  { id: 9,  src: "/portfolio/black-and-grey/5.png",  alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
+  { id: 10, src: "/portfolio/black-and-grey/8.png",  alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
+  { id: 11, src: "/portfolio/black-and-grey/9.png",  alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
+  { id: 12, src: "/portfolio/black-and-grey/11.png", alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
+  { id: 13, src: "/portfolio/black-and-grey/12.png", alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
+  { id: 14, src: "/portfolio/black-and-grey/16.png", alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
+  { id: 15, src: "/portfolio/black-and-grey/17.png", alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
+  { id: 16, src: "/portfolio/color/10.png",           alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 },
+  { id: 17, src: "/portfolio/color/13.png",           alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 },
+  { id: 18, src: "/portfolio/color/15.png",           alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 },
+  { id: 19, src: "/portfolio/color/18.png",           alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 },
+  { id: 20, src: "/portfolio/color/19.png",           alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 },
+  { id: 21, src: "/portfolio/color/20.png",           alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 },
 ];
 
-const categories = ["all", "color", "realism", "micro-realism", "surrealism", "blackwork", "geometric", "botanical", "anime"];
+const categories = ["all", "black-and-grey", "color"];
 
 export default function Portfolio() {
   const [active, setActive] = useState("all");
@@ -76,112 +61,88 @@ export default function Portfolio() {
   return (
     <section id="portfolio" className="py-16 md:py-32 px-6 md:px-12">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-8"
+          className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6"
         >
           <div>
-            <p className="text-[10px] tracking-[0.35em] uppercase text-[var(--gold)] mb-4">
-              Selected Works
-            </p>
+            <p className="text-[10px] tracking-[0.35em] uppercase text-[var(--gold)] mb-4">Portfolio</p>
             <h2
               className="text-[clamp(2.5rem,5vw,4.5rem)] leading-none text-[var(--text)]"
               style={{ fontFamily: "var(--font-display)", fontWeight: 800, letterSpacing: "-0.03em" }}
             >
-              THE ART
+              THE WORK
             </h2>
-          </div>
-
-          {/* Filter */}
-          <div className="flex items-center gap-6 flex-wrap">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => handleCategoryChange(cat)}
-                className="text-[10px] tracking-[0.2em] uppercase transition-colors duration-200 cursor-pointer pb-0.5"
-                style={{
-                  color: active === cat ? "var(--gold)" : "var(--muted)",
-                  borderBottom: active === cat ? "1px solid var(--gold)" : "1px solid transparent",
-                }}
-              >
-                {cat === "all" ? "All" : cat.replace("-", " ")}
-              </button>
-            ))}
           </div>
         </motion.div>
 
-        {/* Masonry grid */}
-        <div className="columns-1 sm:columns-2 lg:columns-3 gap-3 space-y-3">
-          <AnimatePresence mode="popLayout">
-            {displayed.map((work, i) => (
+        <div className="flex flex-wrap gap-2 mb-12">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => handleCategoryChange(cat)}
+              className={`px-5 py-2 text-[10px] tracking-[0.25em] uppercase transition-all duration-300 cursor-pointer border ${
+                active === cat
+                  ? "bg-[var(--gold)] text-[var(--bg)] border-[var(--gold)]"
+                  : "border-[var(--border)] text-[var(--muted)] hover:border-[var(--gold-dim)] hover:text-[var(--text)]"
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={active}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            className="columns-2 md:columns-3 gap-3 md:gap-4"
+          >
+            {displayed.map((work) => (
               <motion.div
                 key={work.id}
                 layout
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.35, delay: i * 0.03 }}
-                className="relative group overflow-hidden break-inside-avoid cursor-pointer"
-                style={{ aspectRatio: `${work.w} / ${work.h}` }}
+                initial={{ opacity: 0, scale: 0.97 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.97 }}
+                transition={{ duration: 0.4 }}
+                className="mb-3 md:mb-4 break-inside-avoid overflow-hidden group cursor-pointer"
               >
-                <Image
-                  src={work.src}
-                  alt={work.alt}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                {/* Hover overlay */}
-                <div className="absolute inset-0 bg-[var(--bg)] opacity-0 group-hover:opacity-40 transition-opacity duration-500" />
-                <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                  <span className="text-[9px] tracking-[0.25em] uppercase text-[var(--gold)]">
-                    {work.category.replace("-", " ")}
-                  </span>
+                <div className="relative overflow-hidden" style={{ aspectRatio: `${work.w} / ${work.h}` }}>
+                  <Image
+                    src={work.src}
+                    alt={work.alt}
+                    fill
+                    sizes="(max-width: 768px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
                 </div>
               </motion.div>
             ))}
-          </AnimatePresence>
-        </div>
+          </motion.div>
+        </AnimatePresence>
 
-        {/* Show More — All tab only */}
         {isTruncated && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="mt-10 text-center"
+            transition={{ duration: 0.5 }}
+            className="mt-12 text-center"
           >
             <button
               onClick={() => setShowAll(true)}
-              className="inline-flex items-center gap-3 text-[11px] tracking-[0.25em] uppercase text-[var(--muted)] hover:text-[var(--gold)] transition-colors duration-300 cursor-pointer border border-current px-6 py-3"
+              className="px-12 py-3.5 border border-[var(--border)] text-[11px] tracking-[0.25em] uppercase text-[var(--muted)] hover:border-[var(--gold-dim)] hover:text-[var(--text)] transition-all duration-300 cursor-pointer"
             >
               Show More
             </button>
           </motion.div>
         )}
-
-        {/* Instagram CTA */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="mt-16 text-center"
-        >
-          <a
-            href="https://www.instagram.com/serdarbolukbasi.ink/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 text-[11px] tracking-[0.25em] uppercase text-[var(--muted)] hover:text-[var(--gold)] transition-colors duration-300 cursor-pointer"
-          >
-            <span className="block w-8 h-px bg-current" />
-            View Full Portfolio on Instagram
-            <span className="block w-8 h-px bg-current" />
-          </a>
-        </motion.div>
       </div>
     </section>
   );

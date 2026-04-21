@@ -26,7 +26,7 @@ const EMAILJS_PUBLIC_KEY  = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY  ?? "";
 type Status = "idle" | "sending" | "success" | "error";
 
 const TIME_SLOTS = ["10:00 AM","11:00 AM","12:00 PM","1:00 PM","2:00 PM","3:00 PM","4:00 PM","5:00 PM","6:00 PM"];
-const TATTOO_STYLES = ["Fine Line","Blackwork","Geometric","Botanical","Color","Realism","Micro Realism","Surrealism","Other"];
+const TATTOO_STYLES = ["Black and Grey","Color","Realism","Portraits","Cover Ups","Other"];
 const DAYS = ["Mo","Tu","We","Th","Fr","Sa","Su"];
 
 // ─── Custom Calendar ──────────────────────────────────────────────────────────
@@ -222,7 +222,7 @@ export default function Booking() {
   };
 
   const inputBase =
-    "w-full bg-transparent border-b border-[var(--border)] py-3 text-sm text-[var(--text)] placeholder:text-[var(--border)] focus:outline-none focus:border-[var(--gold)] transition-colors duration-200";
+    "w-full bg-transparent border-b border-[var(--border)] py-3 text-sm text-[var(--text)] placeholder:text-[var(--muted)] focus:outline-none focus:border-[var(--gold)] transition-colors duration-200";
 
   const isValid = form.name && form.email && form.description && selected && time;
 

@@ -14,17 +14,30 @@ export default function Hero() {
       id="hero"
       className="relative min-h-screen flex flex-col items-center justify-end pb-40 md:justify-center md:pb-0 overflow-hidden"
     >
-      {/* Background photo */}
-      <Image
-        src="/hero-bg.jpg"
-        alt="Serdar Bolukbaşi studio"
-        fill
-        priority
-        className="object-cover object-center"
-        sizes="100vw"
-      />
+      {/* Mobile background — photo */}
+      <div className="absolute inset-0 block md:hidden">
+        <Image
+          src="/6F8A7420.jpg"
+          alt="Oktay Yıldırım tattooing"
+          fill
+          priority
+          className="object-cover object-center"
+          sizes="100vw"
+        />
+      </div>
 
-      {/* Dark overlay — heavier at top and bottom, lighter in middle */}
+      {/* Desktop background — video */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover object-center hidden md:block"
+      >
+        <source src="/Oktay - Website VSL.mp4" type="video/mp4" />
+      </video>
+
+      {/* Dark overlay */}
       <div
         className="absolute inset-0"
         style={{
@@ -33,14 +46,13 @@ export default function Hero() {
         }}
       />
 
-      {/* Vertical rule lines — decorative */}
+      {/* Vertical rule lines */}
       <div className="absolute left-8 top-0 bottom-0 w-px bg-white/10 hidden lg:block" />
       <div className="absolute right-8 top-0 bottom-0 w-px bg-white/10 hidden lg:block" />
 
       {/* Content */}
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto flex flex-col items-center md:mt-64 w-full">
 
-        {/* Name */}
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -48,10 +60,9 @@ export default function Hero() {
           className="text-[clamp(2rem,5.5vw,4.5rem)] leading-none text-white"
           style={{ fontFamily: "var(--font-display)", fontWeight: 800, letterSpacing: "-0.03em" }}
         >
-          SERDAR <span style={{ color: "var(--gold)", fontWeight: 400 }}>BOLUKBAŞI</span>
+          OKTAY <span className="gold-gradient-text" style={{ fontWeight: 400 }}>YILDIRIM</span>
         </motion.h1>
 
-        {/* Award badge */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -60,12 +71,11 @@ export default function Hero() {
         >
           <span className="block w-12 h-px bg-[var(--gold-dim)]" />
           <span className="text-[10px] tracking-[0.35em] uppercase text-[var(--gold)]">
-            International Award Winning Artist
+            International Award Winning Tattoo Artist
           </span>
           <span className="block w-12 h-px bg-[var(--gold-dim)]" />
         </motion.div>
 
-        {/* CTAs */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -94,9 +104,7 @@ export default function Hero() {
         transition={{ duration: 1, delay: 1.5 }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
-        <span className="text-[9px] tracking-[0.3em] uppercase text-white/30">
-          Scroll
-        </span>
+        <span className="text-[9px] tracking-[0.3em] uppercase text-white/30">Scroll</span>
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
