@@ -5,30 +5,45 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
 const works = [
-  // ── Featured order (All tab preview) ────────────────────────────────────
+  // ── Featured order (shown first in All tab) ──────────────────────────────
   { id: 1,  src: "/portfolio/black-and-grey/2.png",  alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 }, // Featured 1
   { id: 2,  src: "/portfolio/color/14.png",           alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 }, // Featured 2
-  { id: 3,  src: "/portfolio/black-and-grey/21.png", alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 }, // Featured 3 — Portrait
+  { id: 3,  src: "/portfolio/black-and-grey/21.png", alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 }, // Featured 3
   { id: 4,  src: "/portfolio/color/6.png",            alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 }, // Featured 4 — Award-Winning
   { id: 5,  src: "/portfolio/black-and-grey/5.png",  alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 }, // Featured 5
-  { id: 6,  src: "/portfolio/color/7.png",            alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 }, // Featured 6
-  // ── Award-Winning — excluded from All, visible in category tabs ──────────
-  { id: 7,  src: "/portfolio/black-and-grey/1.png",  alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350, excludeFromAll: true },
-  // ── Rest of portfolio ────────────────────────────────────────────────────
-  { id: 8,  src: "/portfolio/black-and-grey/4.png",  alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
-  { id: 9,  src: "/portfolio/black-and-grey/5.png",  alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
-  { id: 10, src: "/portfolio/black-and-grey/8.png",  alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
-  { id: 11, src: "/portfolio/black-and-grey/9.png",  alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
-  { id: 12, src: "/portfolio/black-and-grey/11.png", alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
-  { id: 13, src: "/portfolio/black-and-grey/12.png", alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
-  { id: 14, src: "/portfolio/black-and-grey/16.png", alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
-  { id: 15, src: "/portfolio/black-and-grey/17.png", alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
-  { id: 16, src: "/portfolio/color/10.png",           alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 },
-  { id: 17, src: "/portfolio/color/13.png",           alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 },
-  { id: 18, src: "/portfolio/color/15.png",           alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 },
-  { id: 19, src: "/portfolio/color/18.png",           alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 },
-  { id: 20, src: "/portfolio/color/19.png",           alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 },
-  { id: 21, src: "/portfolio/color/20.png",           alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 },
+  // ── Rest of black-and-grey ───────────────────────────────────────────────
+  { id: 6,  src: "/portfolio/black-and-grey/3.png",  alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
+  { id: 7,  src: "/portfolio/black-and-grey/4.png",  alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
+  { id: 8,  src: "/portfolio/black-and-grey/8.png",  alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
+  { id: 9,  src: "/portfolio/black-and-grey/9.png",  alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
+  { id: 10, src: "/portfolio/black-and-grey/11.png", alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
+  { id: 11, src: "/portfolio/black-and-grey/12.png", alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
+  { id: 12, src: "/portfolio/black-and-grey/16.png", alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
+  { id: 13, src: "/portfolio/black-and-grey/17.png", alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
+  { id: 14, src: "/portfolio/black-and-grey/22.png", alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
+  { id: 15, src: "/portfolio/black-and-grey/23.png", alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
+  { id: 16, src: "/portfolio/black-and-grey/26.png", alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 }, // Award-Winning
+  { id: 17, src: "/portfolio/black-and-grey/27.png", alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
+  { id: 18, src: "/portfolio/black-and-grey/29.png", alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
+  { id: 19, src: "/portfolio/black-and-grey/30.png", alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
+  { id: 20, src: "/portfolio/black-and-grey/32.png", alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350 },
+  // ── Award-Winning (excluded from All tab) ───────────────────────────────
+  { id: 21, src: "/portfolio/black-and-grey/1.png",  alt: "Tattoo by Oktay", category: "black-and-grey", w: 1080, h: 1350, excludeFromAll: true },
+  // ── Rest of color ────────────────────────────────────────────────────────
+  { id: 22, src: "/portfolio/color/7.png",            alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 },
+  { id: 23, src: "/portfolio/color/10.png",           alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 },
+  { id: 24, src: "/portfolio/color/13.png",           alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 }, // Award-Winning
+  { id: 25, src: "/portfolio/color/15.png",           alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 },
+  { id: 26, src: "/portfolio/color/18.png",           alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 },
+  { id: 27, src: "/portfolio/color/19.png",           alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 },
+  { id: 28, src: "/portfolio/color/20.png",           alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 },
+  { id: 29, src: "/portfolio/color/24.png",           alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 },
+  { id: 30, src: "/portfolio/color/25.png",           alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 }, // Award-Winning
+  { id: 31, src: "/portfolio/color/28.png",           alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 }, // Award-Winning
+  { id: 32, src: "/portfolio/color/31.png",           alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 },
+  { id: 33, src: "/portfolio/color/33.png",           alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 },
+  { id: 34, src: "/portfolio/color/34.png",           alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 },
+  { id: 35, src: "/portfolio/color/35.png",           alt: "Tattoo by Oktay", category: "color",          w: 1080, h: 1350 }, // Award-Winning
 ];
 
 const categories = ["all", "black-and-grey", "color"];
