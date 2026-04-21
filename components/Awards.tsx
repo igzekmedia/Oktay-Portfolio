@@ -6,8 +6,8 @@ import Image from "next/image";
 const entries = [
   {
     images: [
-      { src: "/awards/Villain Arts Chicago 2026/1.png", w: 1080, h: 1350 },
-      { src: "/awards/Villain Arts Chicago 2026/2.png", w: 1080, h: 1350 },
+      { src: "/awards/Villain Arts Chicago 2026/28.png", w: 1080, h: 1350 },
+      { src: "/awards/Villain Arts Chicago 2026 - 2/35.png", w: 1080, h: 1350 },
     ],
     convention: "Villain Arts Tattoo Arts Festival",
     year: "2026",
@@ -19,10 +19,21 @@ const entries = [
   {
     images: [
       { src: "/awards/Villain Arts Tattoo Arts Festival 2025/6.png", w: 1080, h: 1350 },
-      { src: "/awards/Villain Arts Tattoo Arts Festival 2025/2.png", w: 1080, h: 1350 },
+      { src: "/awards/Villain Arts Tattoo Arts Festival 2025 - 2/26.png", w: 1080, h: 1350 },
     ],
     convention: "Villain Arts Tattoo Arts Festival",
     year: "2025",
+    location: "Denver, Colorado",
+    awards: [
+      { placement: "TBA", category: "Award details coming soon" },
+    ],
+  },
+  {
+    images: [
+      { src: "/awards/Villain Arts Tattoo Arts Festival 2024/25.png", w: 1080, h: 1350 },
+    ],
+    convention: "Villain Arts Tattoo Arts Festival",
+    year: "2024",
     location: "Denver, Colorado",
     awards: [
       { placement: "TBA", category: "Award details coming soon" },
