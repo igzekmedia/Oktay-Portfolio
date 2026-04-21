@@ -21,6 +21,13 @@ const entries = [
   },
   // 2025
   {
+    src: "/awards/Colorado Tattoo Convention 2025/1.png",
+    convention: "Colorado Tattoo Convention",
+    year: "2025",
+    location: "Denver, Colorado",
+    awards: [{ placement: "TBA", category: "Award details coming soon" }],
+  },
+  {
     src: "/awards/Villain Arts Tattoo Arts Festival 2025/6.png",
     convention: "Villain Arts Tattoo Arts Festival",
     year: "2025",
@@ -30,13 +37,6 @@ const entries = [
   {
     src: "/awards/Villain Arts Tattoo Arts Festival 2025 - 2/26.png",
     convention: "Villain Arts Tattoo Arts Festival",
-    year: "2025",
-    location: "Denver, Colorado",
-    awards: [{ placement: "TBA", category: "Award details coming soon" }],
-  },
-  {
-    src: "/awards/Colorado Tattoo Convention 2025/1.png",
-    convention: "Colorado Tattoo Convention",
     year: "2025",
     location: "Denver, Colorado",
     awards: [{ placement: "TBA", category: "Award details coming soon" }],
