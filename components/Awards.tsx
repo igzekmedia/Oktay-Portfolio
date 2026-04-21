@@ -5,50 +5,46 @@ import Image from "next/image";
 
 const entries = [
   {
-    images: [
-      { src: "/awards/Villain Arts Chicago 2026/28.png", w: 1080, h: 1350 },
-      { src: "/awards/Villain Arts Chicago 2026 - 2/35.png", w: 1080, h: 1350 },
-    ],
+    src: "/awards/Villain Arts Chicago 2026/28.png",
     convention: "Villain Arts Tattoo Arts Festival",
     year: "2026",
     location: "Chicago, Illinois",
-    awards: [
-      { placement: "TBA", category: "Award details coming soon" },
-    ],
+    awards: [{ placement: "TBA", category: "Award details coming soon" }],
   },
   {
-    images: [
-      { src: "/awards/Villain Arts Tattoo Arts Festival 2025/6.png", w: 1080, h: 1350 },
-      { src: "/awards/Villain Arts Tattoo Arts Festival 2025 - 2/26.png", w: 1080, h: 1350 },
-    ],
+    src: "/awards/Villain Arts Chicago 2026 - 2/35.png",
+    convention: "Villain Arts Tattoo Arts Festival",
+    year: "2026",
+    location: "Chicago, Illinois",
+    awards: [{ placement: "TBA", category: "Award details coming soon" }],
+  },
+  {
+    src: "/awards/Villain Arts Tattoo Arts Festival 2025/6.png",
     convention: "Villain Arts Tattoo Arts Festival",
     year: "2025",
     location: "Denver, Colorado",
-    awards: [
-      { placement: "TBA", category: "Award details coming soon" },
-    ],
+    awards: [{ placement: "TBA", category: "Award details coming soon" }],
   },
   {
-    images: [
-      { src: "/awards/Villain Arts Tattoo Arts Festival 2024/25.png", w: 1080, h: 1350 },
-    ],
+    src: "/awards/Villain Arts Tattoo Arts Festival 2025 - 2/26.png",
+    convention: "Villain Arts Tattoo Arts Festival",
+    year: "2025",
+    location: "Denver, Colorado",
+    awards: [{ placement: "TBA", category: "Award details coming soon" }],
+  },
+  {
+    src: "/awards/Villain Arts Tattoo Arts Festival 2024/25.png",
     convention: "Villain Arts Tattoo Arts Festival",
     year: "2024",
     location: "Denver, Colorado",
-    awards: [
-      { placement: "TBA", category: "Award details coming soon" },
-    ],
+    awards: [{ placement: "TBA", category: "Award details coming soon" }],
   },
   {
-    images: [
-      { src: "/awards/Colorado Tattoo Convention 2025/1.png", w: 1080, h: 1350 },
-    ],
+    src: "/awards/Colorado Tattoo Convention 2025/1.png",
     convention: "Colorado Tattoo Convention",
     year: "2025",
     location: "Denver, Colorado",
-    awards: [
-      { placement: "TBA", category: "Award details coming soon" },
-    ],
+    awards: [{ placement: "TBA", category: "Award details coming soon" }],
   },
 ];
 
@@ -92,19 +88,15 @@ export default function Awards() {
               transition={{ duration: 0.7, delay: i * 0.07 }}
               className="group grid grid-cols-1 md:grid-cols-[1fr_2fr] border border-[var(--border)] hover:border-[var(--gold-dim)] transition-colors duration-500 overflow-hidden"
             >
-              {/* Photos */}
-              <div className="flex overflow-hidden" style={{ height: "400px" }}>
-                {entry.images.map((img, j) => (
-                  <div key={j} className="relative flex-1 overflow-hidden">
-                    <Image
-                      src={img.src}
-                      alt="Award winning tattoo by Oktay"
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 50vw, 16vw"
-                    />
-                  </div>
-                ))}
+              {/* Photo */}
+              <div className="relative overflow-hidden" style={{ height: "400px" }}>
+                <Image
+                  src={entry.src}
+                  alt="Award winning tattoo by Oktay"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
               </div>
 
               {/* Info */}
