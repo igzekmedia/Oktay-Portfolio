@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 const entries = [
+  // 2026
   {
     src: "/awards/Villain Arts Chicago 2026/28.png",
     convention: "Villain Arts Tattoo Arts Festival",
@@ -18,6 +19,7 @@ const entries = [
     location: "Chicago, Illinois",
     awards: [{ placement: "TBA", category: "Award details coming soon" }],
   },
+  // 2025
   {
     src: "/awards/Villain Arts Tattoo Arts Festival 2025/6.png",
     convention: "Villain Arts Tattoo Arts Festival",
@@ -33,16 +35,17 @@ const entries = [
     awards: [{ placement: "TBA", category: "Award details coming soon" }],
   },
   {
-    src: "/awards/Villain Arts Tattoo Arts Festival 2024/25.png",
-    convention: "Villain Arts Tattoo Arts Festival",
-    year: "2024",
-    location: "Denver, Colorado",
-    awards: [{ placement: "TBA", category: "Award details coming soon" }],
-  },
-  {
     src: "/awards/Colorado Tattoo Convention 2025/1.png",
     convention: "Colorado Tattoo Convention",
     year: "2025",
+    location: "Denver, Colorado",
+    awards: [{ placement: "TBA", category: "Award details coming soon" }],
+  },
+  // 2024
+  {
+    src: "/awards/Villain Arts Tattoo Arts Festival 2024/25.png",
+    convention: "Villain Arts Tattoo Arts Festival",
+    year: "2024",
     location: "Denver, Colorado",
     awards: [{ placement: "TBA", category: "Award details coming soon" }],
   },
@@ -88,7 +91,6 @@ export default function Awards() {
               transition={{ duration: 0.7, delay: i * 0.07 }}
               className="group grid grid-cols-1 md:grid-cols-[1fr_2fr] border border-[var(--border)] hover:border-[var(--gold-dim)] transition-colors duration-500 overflow-hidden"
             >
-              {/* Photo */}
               <div className="relative overflow-hidden" style={{ height: "400px" }}>
                 <Image
                   src={entry.src}
@@ -99,7 +101,6 @@ export default function Awards() {
                 />
               </div>
 
-              {/* Info */}
               <div className="flex flex-col p-8 md:p-12 bg-[var(--surface)] group-hover:bg-[var(--surface-2)] transition-colors duration-500">
                 <div className="mb-8">
                   <div className="flex items-center justify-between gap-4 mb-3">
