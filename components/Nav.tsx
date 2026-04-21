@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -14,9 +14,25 @@ const links = [
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  // mobile hide-on-scroll-down
+  const [mobileVisible, setMobileVisible] = useState(true);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 60);
+
+      // On mobile: hide when scrolling down past 80px, show on scroll up
+      if (typeof window !== "undefined" && window.innerWidth < 768) {
+        if (y > 80) {
+          setMobileVisible(y < lastScrollY.current);
+        } else {
+          setMobileVisible(true);
+        }
+      }
+      lastScrollY.current = y;
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -40,7 +56,9 @@ export default function Nav() {
             : "transparent",
           backdropFilter: scrolled ? "blur(12px)" : "none",
           borderBottom: scrolled ? "1px solid #1a1a1a" : "none",
-          transition: "background 0.4s, backdrop-filter 0.4s, border-color 0.4s",
+          transition: "background 0.4s, backdrop-filter 0.4s, border-color 0.4s, transform 0.35s ease",
+          // hide/show on mobile via transform; desktop always visible
+          transform: mobileVisible ? "translateY(0)" : "translateY(-110%)",
         }}
       >
 
@@ -55,7 +73,6 @@ export default function Nav() {
             alt="Oktay Yıldırım"
             fill
             className="object-contain"
-
           />
         </a>
 
