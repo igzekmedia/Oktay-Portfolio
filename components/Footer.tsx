@@ -28,7 +28,7 @@ export default function Footer() {
               />
             </div>
             <p className="text-[10px] tracking-[0.25em] uppercase text-[var(--muted)]">
-              Tattoo Artist · Cleopatra Ink Denver
+              Tattoo Artist · Denver, Colorado
             </p>
           </div>
 
