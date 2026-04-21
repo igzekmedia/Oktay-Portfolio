@@ -51,7 +51,7 @@ export default function About() {
               transition={{ duration: 0.7, delay: 0.15 }}
               className="text-[11px] tracking-[0.2em] uppercase text-[var(--gold)] mb-10"
             >
-              Black &amp; Grey · Color Realism · Portraits · Denver, CO
+              Black &amp; Grey · Color Realism · Portraits
             </motion.p>
 
             <motion.div
