@@ -184,8 +184,9 @@ export default function Booking() {
         });
         const imgbbData = new FormData();
         imgbbData.append("image", base64);
+        const imgbbAlbum = process.env.NEXT_PUBLIC_IMGBB_ALBUM_ID ?? "";
         const imgbbRes = await fetch(
-          `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`,
+          `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}${imgbbAlbum ? "&album=" + imgbbAlbum : ""}`,
           { method: "POST", body: imgbbData }
         );
         const imgbbJson = await imgbbRes.json();
