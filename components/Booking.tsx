@@ -377,8 +377,8 @@ export default function Booking() {
             {status === "error" && (
               <p className="text-sm text-red-400">
                 Something went wrong — email directly:{" "}
-                <a href="mailto:serdarbolukbasi.ink@gmail.com" className="underline">
-                  serdarbolukbasi.ink@gmail.com
+                <a href="mailto:oktaytattooart@gmail.com" className="underline">
+                  oktaytattooart@gmail.com
                 </a>
               </p>
             )}
