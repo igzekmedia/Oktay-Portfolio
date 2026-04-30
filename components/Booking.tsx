@@ -371,7 +371,7 @@ export default function Booking() {
 
             {status === "success" && (
               <p className="text-sm text-[var(--gold)]">
-                Sent. Serdar will be in touch within 48 hours.
+                Sent. Oktay will be in touch within 48 hours.
               </p>
             )}
             {status === "error" && (
