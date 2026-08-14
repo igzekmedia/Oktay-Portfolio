@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
@@ -14,10 +15,10 @@ export default function Footer() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="flex flex-col md:flex-row items-start md:items-center justify-between gap-10"
+          className="flex flex-col items-center text-center gap-8"
         >
           {/* Name mark */}
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col items-center gap-3">
             <div className="relative w-[100px] h-[100px]">
               <Image
                 src="/Oktay_Logo.png"
@@ -33,7 +34,7 @@ export default function Footer() {
           </div>
 
           {/* Links */}
-          <nav className="flex flex-wrap gap-8">
+          <nav className="flex flex-wrap items-center justify-center gap-8">
             <a
               href="https://www.instagram.com/oktaytattooart"
               target="_blank"
@@ -75,19 +76,40 @@ export default function Footer() {
               }}
               className="flex items-center gap-2 text-[11px] tracking-[0.15em] uppercase text-[var(--gold)] hover:text-[var(--text)] transition-colors duration-300 cursor-pointer"
             >
-              Book Appointment
+              Book Consultation
             </button>
           </nav>
         </motion.div>
 
         {/* Bottom bar */}
-        <div className="mt-12 pt-6 border-t border-[var(--border)] flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <p className="text-[10px] tracking-[0.1em] text-[var(--border)]">
+        <div className="mt-12 pt-8 border-t border-[var(--border)] flex flex-col items-center gap-5 text-center">
+          <div className="flex flex-col items-center gap-2">
+          <p className="text-[10px] tracking-[0.1em] text-[#5a5652]">
             © {year} Oktay Yıldırım. All rights reserved.
           </p>
-          <p className="text-[10px] tracking-[0.1em] text-[var(--border)]">
-            All artwork and images are the sole property of Oktay Yıldırım.
-          </p>
+          </div>
+          <div className="flex flex-col items-center gap-3">
+            <div className="flex items-center gap-3 text-[10px] tracking-[0.15em] uppercase text-[var(--muted)]">
+              <Link href="/privacy-policy" className="hover:text-[var(--gold)] transition-colors duration-300">
+                Privacy Policy
+              </Link>
+              <span aria-hidden="true" className="text-[var(--muted)]">&middot;</span>
+              <Link href="/terms-and-conditions" className="hover:text-[var(--gold)] transition-colors duration-300">
+                Terms and Conditions
+              </Link>
+            </div>
+            <p className="text-[10px] tracking-[0.1em] uppercase text-[var(--muted)]">
+              Designed by{" "}
+              <a
+                href="https://igzekmedia.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[var(--text)] hover:text-[var(--gold)] transition-colors duration-300"
+              >
+                IGZEK MEDIA
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </footer>

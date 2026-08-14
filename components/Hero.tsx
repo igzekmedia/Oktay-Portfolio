@@ -92,7 +92,7 @@ export default function Hero() {
             onClick={() => scrollTo("#booking")}
             className="w-full sm:w-auto px-10 py-3.5 border border-white/25 text-white/70 text-[11px] tracking-[0.25em] uppercase hover:border-white/60 hover:text-white transition-colors duration-300 cursor-pointer"
           >
-            Book Session
+            Book Consultation
           </button>
         </motion.div>
       </div>

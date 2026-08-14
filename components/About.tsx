@@ -69,7 +69,7 @@ export default function About() {
                 Originally from Turkey, Oktay has been perfecting his craft since 2010 — bringing a quiet intensity to every piece. He is humble, deeply passionate about his craft, and sought out by clients who want the right artist to trust with their vision — not just someone to fill the space.
               </p>
               <p>
-                He has earned over 10 awards across Colorado, Los Angeles, Chicago, and beyond — and continues to push his craft at Cleopatra Ink Denver, Colorado's most awarded tattoo studio.
+                He has earned over 10 awards across Colorado, Los Angeles, Chicago, and beyond — and continues to push his craft at Cleopatra Ink Denver, Colorado&apos;s most awarded tattoo studio.
               </p>
             </motion.div>
 

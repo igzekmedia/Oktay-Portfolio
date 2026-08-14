@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import {
   format,
   addDays,
@@ -15,12 +15,6 @@ import {
   subMonths,
   isToday,
 } from "date-fns";
-import emailjs from "@emailjs/browser";
-
-const EMAILJS_SERVICE_ID  = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID  ?? "";
-const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ?? "";
-const EMAILJS_PUBLIC_KEY  = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY  ?? "";
-
 
 
 type Status = "idle" | "sending" | "success" | "error";
@@ -28,6 +22,27 @@ type Status = "idle" | "sending" | "success" | "error";
 const TIME_SLOTS = ["10:00 AM","11:00 AM","12:00 PM","1:00 PM","2:00 PM","3:00 PM","4:00 PM","5:00 PM","6:00 PM"];
 const TATTOO_STYLES = ["Black and Grey","Color","Realism","Portraits","Cover Ups","Other"];
 const DAYS = ["Mo","Tu","We","Th","Fr","Sa","Su"];
+
+const MAX_FILES = 5;
+const MAX_FILE_BYTES = 5 * 1024 * 1024;
+const MAX_TOTAL_BYTES = 20 * 1024 * 1024;
+
+// Build a Google Calendar wall-clock range (interpreted in America/Denver).
+function toGCalRange(day: Date, timeStr: string) {
+  const m = timeStr.match(/(\d+):(\d+)\s*(AM|PM)/i);
+  if (!m) return null;
+  let h = parseInt(m[1], 10);
+  const min = m[2];
+  const ap = m[3].toUpperCase();
+  if (ap === "PM" && h !== 12) h += 12;
+  if (ap === "AM" && h === 12) h = 0;
+  const y = day.getFullYear();
+  const mo = String(day.getMonth() + 1).padStart(2, "0");
+  const d = String(day.getDate()).padStart(2, "0");
+  const hh = String(h).padStart(2, "0");
+  const eh = String((h + 1) % 24).padStart(2, "0");
+  return { start: `${y}${mo}${d}T${hh}${min}00`, end: `${y}${mo}${d}T${eh}${min}00` };
+}
 
 // ─── Custom Calendar ──────────────────────────────────────────────────────────
 function Calendar({
@@ -144,10 +159,6 @@ function Calendar({
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function Booking() {
-  useEffect(() => {
-    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
-  }, []);
-
   const minDate = addDays(startOfToday(), 3);
 
   const [selected, setSelected] = useState<Date | undefined>();
@@ -156,7 +167,8 @@ export default function Booking() {
     name: "", email: "", phone: "", style: "",
     placement: "", size: "", description: "",
   });
-  const [referenceFile, setReferenceFile] = useState<File | null>(null);
+  const [referenceFiles, setReferenceFiles] = useState<File[]>([]);
+  const [fileError, setFileError] = useState("");
   const [status, setStatus] = useState<Status>("idle");
 
   const handleChange = useCallback(
@@ -167,55 +179,80 @@ export default function Booking() {
     []
   );
 
+  const handleFiles = useCallback((incoming: FileList | null) => {
+    if (!incoming) return;
+    setFileError("");
+    setReferenceFiles((prev) => {
+      const next = [...prev];
+      for (const f of Array.from(incoming)) {
+        if (next.length >= MAX_FILES) {
+          setFileError(`Up to ${MAX_FILES} images.`);
+          break;
+        }
+        if (f.size > MAX_FILE_BYTES) {
+          setFileError("Each image must be under 5MB.");
+          continue;
+        }
+        if (next.some((x) => x.name === f.name && x.size === f.size)) continue;
+        next.push(f);
+      }
+      const totalBytes = next.reduce((sum, f) => sum + f.size, 0);
+      if (totalBytes > MAX_TOTAL_BYTES) {
+        setFileError("Total images must be under 20MB.");
+        return prev;
+      }
+      return next;
+    });
+  }, []);
+
+  const removeFile = useCallback((idx: number) => {
+    setReferenceFiles((prev) => prev.filter((_, i) => i !== idx));
+    setFileError("");
+  }, []);
+
+  const previews = useMemo(
+    () => referenceFiles.map((f) => ({ name: f.name, url: URL.createObjectURL(f) })),
+    [referenceFiles],
+  );
+  useEffect(() => {
+    return () => previews.forEach((p) => URL.revokeObjectURL(p.url));
+  }, [previews]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selected || !time) return;
     setStatus("sending");
 
     try {
-      let referenceUrl = "No reference image provided";
+      const data = new FormData();
+      data.append("name", form.name);
+      data.append("email", form.email);
+      data.append("phone", form.phone);
+      data.append("style", form.style);
+      data.append("placement", form.placement);
+      data.append("size", form.size);
+      data.append("description", form.description);
+      data.append("appointment_date", format(selected, "EEEE, MMMM d, yyyy"));
+      data.append("appointment_time", time);
+      const cal = toGCalRange(selected, time);
+      if (cal) {
+        data.append("gcal_start", cal.start);
+        data.append("gcal_end", cal.end);
+      }
+      referenceFiles.forEach((f) => data.append("reference", f));
 
-      if (referenceFile) {
-        const base64 = await new Promise<string>((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve((reader.result as string).split(",")[1]);
-          reader.onerror = reject;
-          reader.readAsDataURL(referenceFile);
-        });
-        const imgbbData = new FormData();
-        imgbbData.append("image", base64);
-        const imgbbAlbum = process.env.NEXT_PUBLIC_IMGBB_ALBUM_ID ?? "";
-        const imgbbRes = await fetch(
-          `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}${imgbbAlbum ? "&album=" + imgbbAlbum : ""}`,
-          { method: "POST", body: imgbbData }
-        );
-        const imgbbJson = await imgbbRes.json();
-        if (imgbbJson.success) {
-          referenceUrl = imgbbJson.data.url;
-        }
+      const res = await fetch("/api/contact", { method: "POST", body: data });
+      if (!res.ok) {
+        setStatus("error");
+        return;
       }
 
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        {
-          from_name: form.name,
-          from_email: form.email,
-          phone: form.phone || "Not provided",
-          appointment_date: format(selected, "EEEE, MMMM d, yyyy"),
-          appointment_time: time,
-          tattoo_style: form.style || "Not specified",
-          placement: form.placement || "Not specified",
-          size: form.size || "Not specified",
-          description: form.description,
-          reference_image: referenceUrl,
-        },
-      );
       setStatus("success");
       setSelected(undefined);
       setTime("");
       setForm({ name:"", email:"", phone:"", style:"", placement:"", size:"", description:"" });
-      setReferenceFile(null);
+      setReferenceFiles([]);
+      setFileError("");
     } catch (err) {
       console.error("Booking submission error:", err);
       setStatus("error");
@@ -273,30 +310,68 @@ export default function Booking() {
                     ))}
                   </select>
                   <input type="text" name="placement" placeholder="Placement (e.g. forearm, back)"       value={form.placement}   onChange={handleChange} className={inputBase} />
-                  <input type="text" name="size"      placeholder="Approximate Size (e.g. 10×15 cm)"     value={form.size}        onChange={handleChange} className={inputBase} />
+                  <input type="text" name="size"      placeholder="Approximate Size (e.g. 6×4 in)"     value={form.size}        onChange={handleChange} className={inputBase} />
                   <textarea name="description" required placeholder="Describe your idea in detail *"
                     value={form.description} onChange={handleChange} rows={4}
                     className={`${inputBase} resize-none`} />
 
-                  {/* Reference image upload */}
+                  {/* Reference images upload (up to 5) */}
                   <div>
                     <label className="block text-[10px] tracking-[0.2em] uppercase text-[var(--muted)] mb-3">
-                      Reference Image <span className="text-[var(--border)]">(optional)</span>
+                      Reference Images <span className="text-[var(--border)]">(optional, up to 5)</span>
                     </label>
                     <label className="flex items-center gap-4 cursor-pointer group">
                       <div className="px-4 py-2 border border-[var(--border)] group-hover:border-[var(--gold-dim)] text-[10px] tracking-[0.2em] uppercase text-[var(--muted)] group-hover:text-[var(--gold)] transition-colors duration-200">
-                        {referenceFile ? "Change File" : "Upload File"}
+                        {referenceFiles.length ? "Add More" : "Upload Files"}
                       </div>
                       <span className="text-xs text-[var(--muted)] truncate max-w-[200px]">
-                        {referenceFile ? referenceFile.name : "No file chosen"}
+                        {referenceFiles.length
+                          ? `${referenceFiles.length} file${referenceFiles.length > 1 ? "s" : ""} selected`
+                          : "No files chosen"}
                       </span>
                       <input
                         type="file"
                         accept="image/*"
+                        multiple
                         className="hidden"
-                        onChange={(e) => setReferenceFile(e.target.files?.[0] ?? null)}
+                        onChange={(e) => {
+                          handleFiles(e.target.files);
+                          e.target.value = "";
+                        }}
                       />
                     </label>
+
+                    {previews.length > 0 && (
+                      <div className="mt-4 flex flex-wrap gap-3">
+                        {previews.map((p, i) => (
+                          <div key={`${p.name}-${i}`} className="relative w-16 h-16">
+                            <button
+                              type="button"
+                              onClick={() => window.open(p.url, "_blank", "noopener,noreferrer")}
+                              className="block w-16 h-16 overflow-hidden rounded-lg border border-[var(--border)] hover:border-[var(--gold-dim)] transition-colors cursor-pointer"
+                              aria-label={`Open ${p.name}`}
+                            >
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img src={p.url} alt={p.name} className="w-full h-full object-cover" />
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => removeFile(i)}
+                              className="absolute -top-2 -right-2 w-5 h-5 flex items-center justify-center rounded-full bg-[var(--bg)] border border-[var(--border)] text-[var(--muted)] hover:text-[var(--gold)] hover:border-[var(--gold-dim)] transition-colors cursor-pointer leading-none"
+                              aria-label={`Remove ${p.name}`}
+                            >
+                              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                                <path d="M18 6L6 18M6 6l12 12" />
+                              </svg>
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {fileError && (
+                      <p className="mt-2 text-xs text-red-400">{fileError}</p>
+                    )}
                   </div>
                 </div>
               </div>

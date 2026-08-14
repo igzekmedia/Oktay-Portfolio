@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
 const links = [
@@ -14,6 +15,7 @@ const links = [
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const router = useRouter();
   const [mobileHidden, setMobileHidden] = useState(false);
   const lastScrollY = useRef(0);
   const isMobile = useRef(false);
@@ -148,10 +150,13 @@ export default function Nav() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.28 }}
-              onClick={() => handleLink("#booking")}
+              onClick={() => {
+                setMenuOpen(false);
+                router.push("/book");
+              }}
               className="mt-4 text-[11px] tracking-[0.2em] uppercase px-8 py-3 border border-[var(--gold)] text-[var(--gold)] cursor-pointer"
             >
-              Book Appointment
+              Book Consultation
             </motion.button>
           </motion.div>
         )}
