@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Optional reference images (up to 5) -> base64 attachments
-    const attachments: { filename: string; content: string; content_id: string }[] = [];
+    const attachments: { filename: string; content: string; content_id?: string }[] = [];
     const files = fd
       .getAll("reference")
       .filter(
@@ -79,9 +79,8 @@ export async function POST(req: NextRequest) {
       }
       const buf = Buffer.from(await f.arrayBuffer());
       attachments.push({
-        filename: f.name || `reference-${idx + 1}`,
+        filename: f.name || `reference-${idx + 1}.jpg`,
         content: buf.toString("base64"),
-        content_id: `ref${idx}`,
       });
       idx++;
     }
@@ -211,14 +210,8 @@ export async function POST(req: NextRequest) {
         ${
           attachments.length
             ? `<div style="margin-top:26px;">
-          <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#8a857d;margin:0 0 12px;">Reference Image${attachments.length > 1 ? "s" : ""}</div>
-          <div>${attachments
-            .map(
-              (a) =>
-                `<img src="cid:${a.content_id}" alt="reference" width="76" height="76" style="width:76px;height:76px;border-radius:10px;object-fit:cover;border:1px solid #e6e0d5;margin:0 8px 8px 0;display:inline-block;vertical-align:top;" />`,
-            )
-            .join("")}</div>
-          <div style="margin-top:6px;font-size:11px;color:#8a857d;">Tap an image to open it full size.</div>
+          <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#8a857d;margin:0 0 8px;">Reference Image${attachments.length > 1 ? "s" : ""}</div>
+          <div style="font-size:14px;color:#1f1c19;">${attachments.length} photo${attachments.length > 1 ? "s" : ""} attached to this email. Open or download from the attachment bar.</div>
         </div>`
             : ""
         }
