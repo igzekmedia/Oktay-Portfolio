@@ -277,10 +277,15 @@ export default function BookingFunnel({ embedded = false }: { embedded?: boolean
 
   const handleFiles = useCallback((incoming: FileList | null) => {
     if (!incoming) return;
+    // Snapshot the FileList synchronously: the <input> onChange resets
+    // e.target.value right after this call, which empties the live FileList
+    // before React runs the (deferred) state updater below.
+    const incomingArr = Array.from(incoming);
+    if (incomingArr.length === 0) return;
     setFileError("");
     setReferenceFiles((prev) => {
       const next = [...prev];
-      for (const f of Array.from(incoming)) {
+      for (const f of incomingArr) {
         if (next.length >= MAX_FILES) {
           setFileError(`Up to ${MAX_FILES} images.`);
           break;
