@@ -464,7 +464,7 @@ export default function BookingFunnel({ embedded = false }: { embedded?: boolean
       className={
         embedded
           ? "w-full max-w-xl md:max-w-2xl mx-auto flex flex-col text-[var(--text)] scroll-mt-32"
-          : "min-h-screen bg-[var(--bg)] text-[var(--text)] flex flex-col"
+          : "min-h-[100svh] md:min-h-screen bg-[var(--bg)] text-[var(--text)] flex flex-col"
       }
     >
       {!embedded && step === 0 ? (
@@ -854,7 +854,7 @@ export default function BookingFunnel({ embedded = false }: { embedded?: boolean
 
 function WelcomeHero({ onStart }: { onStart: () => void }) {
   return (
-    <section className="relative min-h-screen flex flex-col items-center overflow-hidden">
+    <section className="relative min-h-[100svh] md:min-h-screen flex flex-col items-center overflow-hidden">
       <div
         className="absolute inset-0"
         style={{
