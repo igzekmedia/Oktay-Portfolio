@@ -118,14 +118,17 @@ export async function POST(req: NextRequest) {
     const apiKey = process.env.RESEND_API_KEY;
     if (apiKey) {
       try {
-        const toEmail = process.env.CONTACT_TO_EMAIL || "oktaytattooart@gmail.com";
+        const toList = (process.env.CONTACT_TO_EMAIL || "oktaytattooart@gmail.com")
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean);
         const fromEmail =
           process.env.CONTACT_FROM_EMAIL ||
           "Oktay Yildirim <bookings@oktaytattooart.com>";
 
         const row = (label: string, value: string) =>
           value
-            ? `<tr><td style="padding:12px 16px 12px 0;color:#7A7470;font-size:12px;letter-spacing:0.4px;text-transform:uppercase;border-bottom:1px solid #1d1d1d;white-space:nowrap;vertical-align:top;">${label}</td><td style="padding:12px 0;color:#EDE8E3;font-size:14px;font-weight:500;border-bottom:1px solid #1d1d1d;vertical-align:top;text-align:right;">${escapeHtml(
+            ? `<tr><td style="padding:12px 16px 12px 0;color:#8a857d;font-size:12px;letter-spacing:0.4px;text-transform:uppercase;border-bottom:1px solid #eee9df;white-space:nowrap;vertical-align:top;">${label}</td><td style="padding:12px 0;color:#1f1c19;font-size:14px;font-weight:500;border-bottom:1px solid #eee9df;vertical-align:top;text-align:right;">${escapeHtml(
                 value,
               )}</td></tr>`
             : "";
@@ -147,25 +150,25 @@ export async function POST(req: NextRequest) {
               )}&location=${encodeURIComponent("Cleopatra Ink, 1869 S Broadway, Denver, CO 80210")}`
             : "";
         const buttonsHtml = gcalUrl
-          ? `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:28px 0 0;"><tr><td><a href="${gcalUrl}" style="display:inline-block;background:#d1b468;color:#0a0a0a;font-size:12px;font-weight:bold;letter-spacing:0.5px;text-transform:uppercase;text-decoration:none;padding:12px 22px;border-radius:6px;">Add to calendar</a></td></tr></table>`
+          ? `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:28px 0 0;"><tr><td><a href="${gcalUrl}" style="display:inline-block;background:#c8a24e;color:#0a0a0a;font-size:12px;font-weight:bold;letter-spacing:0.5px;text-transform:uppercase;text-decoration:none;padding:12px 22px;border-radius:6px;">Add to calendar</a></td></tr></table>`
           : "";
 
-        const html = `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="margin:0;background:#090909;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
+        const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="color-scheme" content="light"><meta name="supported-color-schemes" content="light"></head><body style="margin:0;background:#ece7de;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
   <div style="max-width:560px;margin:0 auto;padding:32px 16px;">
-    <div style="background:#101010;border:1px solid #202020;border-radius:12px;padding:40px;">
+    <div style="background:#ffffff;border:1px solid #e6e0d5;border-radius:12px;padding:40px;">
       <img src="${LOGO_URL}" alt="Oktay Yildirim" width="118" style="width:118px;max-width:50%;height:auto;display:block;margin:0 0 28px;" />
-      <div style="border-top:1px solid #202020;padding-top:28px;">
-        <div style="font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#ad8c59;margin:0 0 20px;">New Booking Inquiry</div>
+      <div style="border-top:1px solid #e6e0d5;padding-top:28px;">
+        <div style="font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#9a7b3f;margin:0 0 20px;">New Booking Inquiry</div>
         ${
           appointmentDate
             ? `<div style="margin:0 0 28px;">
-          <div style="font-size:21px;font-weight:bold;color:#EDE8E3;letter-spacing:-0.01em;">${escapeHtml(appointmentDate)}</div>
-          <div style="font-size:14px;color:#d1b468;margin-top:6px;">${escapeHtml(appointmentTime)} &middot; Mountain Time</div>
+          <div style="font-size:21px;font-weight:bold;color:#1f1c19;letter-spacing:-0.01em;">${escapeHtml(appointmentDate)}</div>
+          <div style="font-size:14px;color:#9a7b3f;margin-top:6px;">${escapeHtml(appointmentTime)} &middot; Mountain Time</div>
         </div>`
             : ""
         }
         <table style="width:100%;border-collapse:collapse;">
-          <tr><td colspan="2" style="border-top:1px solid #202020;font-size:0;line-height:0;">&nbsp;</td></tr>
+          <tr><td colspan="2" style="border-top:1px solid #e6e0d5;font-size:0;line-height:0;">&nbsp;</td></tr>
           ${row("Purpose", purpose)}
           ${row("Name", name)}
           ${row("Email", email)}
@@ -175,29 +178,29 @@ export async function POST(req: NextRequest) {
           ${row("Size", size)}
         </table>
         <div style="margin-top:28px;">
-          <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#7A7470;margin:0 0 10px;">Their Idea</div>
-          <div style="font-size:14px;color:#EDE8E3;line-height:1.65;white-space:pre-wrap;">${escapeHtml(
+          <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#8a857d;margin:0 0 10px;">Their Idea</div>
+          <div style="font-size:14px;color:#1f1c19;line-height:1.65;white-space:pre-wrap;">${escapeHtml(
             description,
           )}</div>
         </div>
         ${
           attachments.length
             ? `<div style="margin-top:26px;">
-          <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#7A7470;margin:0 0 12px;">Reference Image${attachments.length > 1 ? "s" : ""}</div>
+          <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#8a857d;margin:0 0 12px;">Reference Image${attachments.length > 1 ? "s" : ""}</div>
           <div>${attachments
             .map(
               (a) =>
-                `<img src="cid:${a.content_id}" alt="reference" width="76" height="76" style="width:76px;height:76px;border-radius:10px;object-fit:cover;border:1px solid #2a2a2a;margin:0 8px 8px 0;display:inline-block;vertical-align:top;" />`,
+                `<img src="cid:${a.content_id}" alt="reference" width="76" height="76" style="width:76px;height:76px;border-radius:10px;object-fit:cover;border:1px solid #e6e0d5;margin:0 8px 8px 0;display:inline-block;vertical-align:top;" />`,
             )
             .join("")}</div>
-          <div style="margin-top:6px;font-size:11px;color:#5a5652;">Tap an image to open it full size.</div>
+          <div style="margin-top:6px;font-size:11px;color:#8a857d;">Tap an image to open it full size.</div>
         </div>`
             : ""
         }
         ${buttonsHtml}
       </div>
     </div>
-    <p style="text-align:center;margin:18px 0 0;font-size:11px;color:#5a5652;">Reply directly to this email to reach ${escapeHtml(
+    <p style="text-align:center;margin:18px 0 0;font-size:11px;color:#8a857d;">Reply directly to this email to reach ${escapeHtml(
       name,
     )}.</p>
   </div>
@@ -211,7 +214,7 @@ export async function POST(req: NextRequest) {
           },
           body: JSON.stringify({
             from: fromEmail,
-            to: [toEmail],
+            to: toList,
             reply_to: email,
             subject: `New booking inquiry: ${name}`,
             html,
@@ -224,23 +227,23 @@ export async function POST(req: NextRequest) {
           console.error("[contact] Resend error (non-blocking):", resp.status, detail);
         } else {
           const firstName = name.split(" ")[0] || name;
-          const replyHtml = `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="margin:0;background:#090909;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
+          const replyHtml = `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="color-scheme" content="light"><meta name="supported-color-schemes" content="light"></head><body style="margin:0;background:#ece7de;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
   <div style="max-width:560px;margin:0 auto;padding:32px 16px;">
-    <div style="background:#101010;border:1px solid #202020;border-radius:12px;padding:40px;">
+    <div style="background:#ffffff;border:1px solid #e6e0d5;border-radius:12px;padding:40px;">
       <img src="${LOGO_URL}" alt="Oktay Yildirim" width="118" style="width:118px;max-width:50%;height:auto;display:block;margin:0 0 28px;" />
-      <div style="border-top:1px solid #202020;padding-top:28px;">
-        <h1 style="margin:0 0 18px;font-size:19px;font-weight:500;color:#EDE8E3;letter-spacing:-0.01em;">Thanks for reaching out, ${escapeHtml(
+      <div style="border-top:1px solid #e6e0d5;padding-top:28px;">
+        <h1 style="margin:0 0 18px;font-size:19px;font-weight:500;color:#1f1c19;letter-spacing:-0.01em;">Thanks for reaching out, ${escapeHtml(
           firstName,
         )}.</h1>
-        <p style="margin:0 0 16px;font-size:15px;line-height:1.7;color:#b8b2ab;">
-          I've received your inquiry and I'll be in touch within 48 hours to confirm your consultation and talk through your idea.
+        <p style="margin:0 0 16px;font-size:15px;line-height:1.7;color:#4a463f;">
+          We've received your inquiry and we'll be in touch within 24 hours to confirm your consultation and talk through your idea.
         </p>
-        <p style="margin:0 0 28px;font-size:15px;line-height:1.7;color:#b8b2ab;">
-          In the meantime, feel free to reply to this email with any extra details or reference images you'd like me to see.
+        <p style="margin:0 0 28px;font-size:15px;line-height:1.7;color:#4a463f;">
+          In the meantime, feel free to reply to this email with any extra details or reference images you'd like us to see.
         </p>
-        <p style="margin:0;font-size:15px;color:#d1b468;">Oktay Yildirim</p>
-        <p style="margin:24px 0 0;font-size:12px;color:#7A7470;line-height:1.7;border-top:1px solid #202020;padding-top:20px;">
-          Cleopatra Ink &middot; 1869 S Broadway, Denver, CO 80210<br><a href="https://oktaytattooart.com" style="color:#ad8c59;text-decoration:none;">oktaytattooart.com</a> &middot; <a href="https://instagram.com/oktaytattooart" style="color:#ad8c59;text-decoration:none;">@oktaytattooart</a>
+        <p style="margin:0;font-size:15px;color:#9a7b3f;">Oktay Yildirim</p>
+        <p style="margin:24px 0 0;font-size:12px;color:#8a857d;line-height:1.7;border-top:1px solid #e6e0d5;padding-top:20px;">
+          Cleopatra Ink &middot; 1869 S Broadway, Denver, CO 80210<br><a href="https://oktaytattooart.com" style="color:#9a7b3f;text-decoration:none;">oktaytattooart.com</a> &middot; <a href="https://instagram.com/oktaytattooart" style="color:#9a7b3f;text-decoration:none;">@oktaytattooart</a>
         </p>
       </div>
     </div>
@@ -256,7 +259,7 @@ export async function POST(req: NextRequest) {
             body: JSON.stringify({
               from: fromEmail,
               to: [email],
-              reply_to: toEmail,
+              reply_to: toList[0],
               subject: "Thanks for reaching out to Oktay",
               html: replyHtml,
             }),
