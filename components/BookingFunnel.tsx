@@ -43,6 +43,45 @@ const MAX_TOTAL_BYTES = 20 * 1024 * 1024;
 
 const OTHER_PLACEMENT = "Other / multiple areas";
 
+// Client-side image compression. Vercel serverless functions reject request
+// bodies over ~4.5MB, so raw phone photos would fail the multipart POST. We
+// resize to a max dimension and re-encode as JPEG before sending. Reference
+// photos stay clear at this size, and 5 images land well under the limit.
+// If a file cannot be decoded (e.g. HEIC on desktop), the original is kept.
+async function compressImage(
+  file: File,
+  maxDim = 2000,
+  quality = 0.82,
+): Promise<File> {
+  if (!file.type.startsWith("image/")) return file;
+  try {
+    const bitmap = await createImageBitmap(file, {
+      imageOrientation: "from-image",
+    });
+    const scale = Math.min(1, maxDim / Math.max(bitmap.width, bitmap.height));
+    const width = Math.max(1, Math.round(bitmap.width * scale));
+    const height = Math.max(1, Math.round(bitmap.height * scale));
+    const canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) {
+      bitmap.close();
+      return file;
+    }
+    ctx.drawImage(bitmap, 0, 0, width, height);
+    bitmap.close();
+    const blob = await new Promise<Blob | null>((resolve) =>
+      canvas.toBlob((b) => resolve(b), "image/jpeg", quality),
+    );
+    if (!blob || blob.size >= file.size) return file;
+    const newName = file.name.replace(/\.[^.]+$/, "") + ".jpg";
+    return new File([blob], newName, { type: "image/jpeg" });
+  } catch {
+    return file;
+  }
+}
+
 // TEMP: skip the Resend send so the confirmation page can be previewed locally.
 // Set to false before shipping (and to test the real send with Resend configured).
 const PREVIEW_BYPASS_SEND: boolean = false;
@@ -390,7 +429,10 @@ export default function BookingFunnel({ embedded = false }: { embedded?: boolean
         data.append("gcal_start", cal.start);
         data.append("gcal_end", cal.end);
       }
-      referenceFiles.forEach((f) => data.append("reference", f));
+      const compressed = await Promise.all(
+        referenceFiles.map((f) => compressImage(f)),
+      );
+      compressed.forEach((f) => data.append("reference", f));
 
       const res = await fetch("/api/contact", { method: "POST", body: data });
       if (!res.ok) {
