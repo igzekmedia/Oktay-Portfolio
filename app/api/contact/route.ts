@@ -126,6 +126,31 @@ export async function POST(req: NextRequest) {
           process.env.CONTACT_FROM_EMAIL ||
           "Oktay Yildirim <bookings@oktaytattooart.com>";
 
+        // Embed the logo as an inline attachment so it renders even when the
+        // email client blocks remote images (Apple Mail and others do by
+        // default). Falls back to the hosted URL if the fetch fails.
+        let logoSrc = LOGO_URL;
+        let logoAttachment:
+          | { filename: string; content: string; content_id: string }
+          | null = null;
+        try {
+          const logoResp = await fetch(LOGO_URL);
+          if (logoResp.ok) {
+            const logoBuf = Buffer.from(await logoResp.arrayBuffer());
+            logoAttachment = {
+              filename: "logo.png",
+              content: logoBuf.toString("base64"),
+              content_id: "logo",
+            };
+            logoSrc = "cid:logo";
+          }
+        } catch {
+          // keep the remote URL fallback
+        }
+        const ownerAttachments = logoAttachment
+          ? [logoAttachment, ...attachments]
+          : attachments;
+
         const row = (label: string, value: string) =>
           value
             ? `<tr><td style="padding:12px 16px 12px 0;color:#8a857d;font-size:12px;letter-spacing:0.4px;text-transform:uppercase;border-bottom:1px solid #eee9df;white-space:nowrap;vertical-align:top;">${label}</td><td style="padding:12px 0;color:#1f1c19;font-size:14px;font-weight:500;border-bottom:1px solid #eee9df;vertical-align:top;text-align:right;">${escapeHtml(
@@ -156,7 +181,7 @@ export async function POST(req: NextRequest) {
         const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="color-scheme" content="light"><meta name="supported-color-schemes" content="light"></head><body style="margin:0;background:#ece7de;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
   <div style="max-width:560px;margin:0 auto;padding:32px 16px;">
     <div style="background:#ffffff;border:1px solid #e6e0d5;border-radius:12px;padding:40px;">
-      <img src="${LOGO_URL}" alt="Oktay Yildirim" width="118" style="width:118px;max-width:50%;height:auto;display:block;margin:0 0 28px;" />
+      <img src="${logoSrc}" alt="Oktay Yildirim" width="118" style="width:118px;max-width:50%;height:auto;display:block;margin:0 0 28px;" />
       <div style="border-top:1px solid #e6e0d5;padding-top:28px;">
         <div style="font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#9a7b3f;margin:0 0 20px;">New Booking Inquiry</div>
         ${
@@ -218,7 +243,7 @@ export async function POST(req: NextRequest) {
             reply_to: email,
             subject: `New booking inquiry: ${name}`,
             html,
-            ...(attachments.length ? { attachments } : {}),
+            ...(ownerAttachments.length ? { attachments: ownerAttachments } : {}),
           }),
         });
 
@@ -230,7 +255,7 @@ export async function POST(req: NextRequest) {
           const replyHtml = `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="color-scheme" content="light"><meta name="supported-color-schemes" content="light"></head><body style="margin:0;background:#ece7de;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
   <div style="max-width:560px;margin:0 auto;padding:32px 16px;">
     <div style="background:#ffffff;border:1px solid #e6e0d5;border-radius:12px;padding:40px;">
-      <img src="${LOGO_URL}" alt="Oktay Yildirim" width="118" style="width:118px;max-width:50%;height:auto;display:block;margin:0 0 28px;" />
+      <img src="${logoSrc}" alt="Oktay Yildirim" width="118" style="width:118px;max-width:50%;height:auto;display:block;margin:0 0 28px;" />
       <div style="border-top:1px solid #e6e0d5;padding-top:28px;">
         <h1 style="margin:0 0 18px;font-size:19px;font-weight:500;color:#1f1c19;letter-spacing:-0.01em;">Thanks for reaching out, ${escapeHtml(
           firstName,
@@ -262,6 +287,7 @@ export async function POST(req: NextRequest) {
               reply_to: toList[0],
               subject: "Thanks for reaching out to Oktay",
               html: replyHtml,
+              ...(logoAttachment ? { attachments: [logoAttachment] } : {}),
             }),
           });
         }
